@@ -10,7 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -51,6 +55,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private ArrayAdapter<String> mForecastAdapter;
+
         public PlaceholderFragment() {
         }
 
@@ -58,6 +64,60 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            //We first create the array
+            String[] forecastArray = {
+                    "Today - Sunny - 24 / 20",
+                    "Tomorrow - Foggy - 21 / 17",
+                    "Weds - Cloudy - 22 / 20",
+                    "Thurs - Rainy - 20 / 15",
+                    "Fri - Foggy - 24 / 22",
+                    "Sat - Sunny - 30 / 26",
+                    "Sun - Sunny - 35 / 29",
+                    "Today - Sunny - 24 / 20",
+                    "Tomorrow - Foggy - 21 / 17",
+                    "Weds - Cloudy - 22 / 20",
+                    "Thurs - Rainy - 20 / 15",
+                    "Fri - Foggy - 24 / 22",
+                    "Sat - Sunny - 30 / 26",
+                    "Sun - Sunny - 35 / 29",
+                    "Today - Sunny - 24 / 20",
+                    "Tomorrow - Foggy - 21 / 17",
+                    "Weds - Cloudy - 22 / 20",
+                    "Thurs - Rainy - 20 / 15",
+                    "Fri - Foggy - 24 / 22",
+                    "Sat - Sunny - 30 / 26",
+                    "Sun - Sunny - 35 / 29"
+            };
+
+            //then we transform the array into an ArrayList
+            ArrayList<String> weekForecast = new ArrayList<String>(
+                    Arrays.asList(forecastArray)
+            );
+
+
+            //we initialize the ArrayAdapter
+            mForecastAdapter = new ArrayAdapter<String>(
+                    //the current context (this fragment)
+                    getActivity(),
+                    //ID of list item layout
+                    R.layout.list_item_forecast,
+                    //ID of the textview to populate
+                    R.id.list_item_forecast_textview,
+                    //Forecast data (ArrayList)
+                    weekForecast
+            );
+
+            //Let's go through the fragment_main.xml file and search for the ListView with
+            // id listview_forecast
+            ListView myListView = (ListView) rootView.findViewById(
+                    R.id.listview_forecast
+            );
+
+            //Set the adapter to the ListView
+            myListView.setAdapter(mForecastAdapter);
+
+
             return rootView;
         }
     }
